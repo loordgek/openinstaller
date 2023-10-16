@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if the script is running as root (superuser)
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run this script with sudo or as root."
+    exit 1
+fi
+
 #apt update
 #apt dist-upgrade -y
 #apt install crudini -y
@@ -14,14 +20,13 @@ show_menu() {
     echo "1. Option 1"
     echo "2. Option 2"
     echo "3. Option 3"
-    echo "4. Done"
     echo "Selected Items: ${selected_items[*]}"
     echo "=========================================="
 }
 
 while true; do
     show_menu
-    read -p "Enter the numbers of the items you want to select (1-3) or '4' to finish: " choices
+    read -p "Enter the numbers of the items you want to select (1-3) or 'y' to finish: " choices
     # Split the user's input into an array of choices
     IFS=" " read -ra choice_array <<< "$choices"
     for choice in "${choice_array[@]}"; do
@@ -35,7 +40,7 @@ while true; do
             3)
                 selected_items+=("Option 3")
                 ;;
-            4)
+            y)
                 if [ ${#selected_items[@]} -eq 0 ]; then
                     echo "You haven't selected any items."
                 else

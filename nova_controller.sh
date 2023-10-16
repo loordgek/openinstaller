@@ -71,6 +71,8 @@ Crudini --set /etc/nova/nova.conf placement auth_url http://controller:5000/v3
 Crudini --set /etc/nova/nova.conf placement username placement 
 Crudini --set /etc/nova/nova.conf placement password PLACEMENT_PASS 
 
+Crudini --set /etc/nova/nova.conf cinder os_region_name RegionOne
+
 su -s /bin/sh -c "nova-manage api_db sync" nova
 su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
 su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
